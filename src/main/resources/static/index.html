@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+
+<html>
+	<head>
+            
+		<title>WS Consume</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div>Data Test Sender</div>
+		<hr>
+		<script>
+			const url = "http://localhost:8080/POST";
+			function post(){
+				let newID = document.getElementById("myid").value;
+				let name = document.getElementById("name").value;
+				let nik = document.getElementById("nik").value;
+                                let address = document.getElementById("address").value;
+                                let photo = document.getElementById("photo").value;
+				let dataText = {"id":newID,"name":name,"nik":nik,"address":address,"photo":photo};
+				let dataJson = JSON.stringify(dataText);
+				$.ajax({
+					url: url,
+					method: 'POST',
+					data: dataJson,
+					contentType: 'application/json',
+					dataType: 'text',
+					success: function(result){
+						console.log(result);
+					}
+				});
+			}
+			
+			function put(){
+				const urlp = "http://localhost:8080/PUT";
+				let editID = document.getElementById("myid").value;
+				let name = document.getElementById("name").value;
+				let nik = document.getElementById("nik").value;
+                                let address = document.getElementById("address").value;
+                                let photo = document.getElementById("photo").value;
+				let dataText = {"id":editID,"name":name,"nik":nik,"address":address,"photo":photo};
+				let dataJson = JSON.stringify(dataText);
+				$.ajax({
+					url: urlp,
+					method: 'PUT',
+					data: dataJson,
+					contentType: 'application/json',
+					dataType: 'text',
+					success: function(result){
+						document.getElementById("viewer").innerHTML = result;
+
+					}
+				});
+			}
+			
+			function get(){
+				const urlg = "http://localhost:8080/GET";
+				$.ajax({
+					url: urlg,
+					method: 'GET',
+					dataType: 'text',
+					success: function(result){
+						document.getElementById("viewer").innerHTML = result;
+					}
+				});
+			}
+			
+			function delID(){
+				const urlg = "http://localhost:8080/DELETE";
+				let editID = document.getElementById("myid").value;
+				let name = document.getElementById("name").value;
+				let nik = document.getElementById("nik").value;
+                                let address = document.getElementById("address").value;
+                                let photo = document.getElementById("photo").value;
+				let dataText = {"id":editID,"name":name,"nik":nik,"address":address,"photo":photo};
+				let dataJson = JSON.stringify(dataText);
+				$.ajax({
+					url: urlg,
+					method: 'DELETE',
+					data: dataJson,
+					contentType: 'application/json',
+					dataType: 'text',
+					success: function(result){
+						document.getElementById("viewer").innerHTML = result;
+					}
+				});
+			}
+			
+		</script>
+                <div>Masukkan ID</div>
+                <input type="text" id="myid" name="myid" placeholder="Kolom id tidak boleh kosong"><hr>
+                <div>Masukkan Nama</div>
+		<input type="text" id="name" name="name" placeholder="Kolom nama tidak boleh kosong"><hr>
+                <div>Masukkan NIK</div>
+		<input type="text" id="nik" name="nik" placeholder="Kolom nik tidak boleh kosong"><hr>
+                <div>Masukkan Alamat</div>
+                <input type="text" id="address" name="address" placeholder="Kolom alamat tidak boleh kosong"><hr>
+                <div>Masukkan Foto</div>
+                <input type="image" id="photo" name="photo" placeholder="Kolom foto tidak boleh kosong"><hr>
+		<hr>
+		<button onclick="get()">Get The Data from Web Server</button><br>
+		<button onclick="post()">Send The Data to Web Server</button><br>
+		<button onclick="put()">Edit The Data of Web Server</button><br>
+		<button onclick="delID()">Delete The Data of Web Server</button>
+		<hr>
+		<div id="viewer"></div>
+	</body>
+</html>
